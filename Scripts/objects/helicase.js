@@ -5,29 +5,22 @@ var __extends = (this && this.__extends) || function (d, b) {
 };
 var objects;
 (function (objects) {
-    var Player = (function (_super) {
-        __extends(Player, _super);
-        function Player(imgString) {
+    var Helicase = (function (_super) {
+        __extends(Helicase, _super);
+        function Helicase(imgString) {
             _super.call(this, imgString);
-            this._gravity = 2;
-            this._maxSpeedX = 3;
-            this._jumpSpeed = 2;
-            this._friction = -1;
-            this._marioState = config.MarioState.SMALL;
-            this._isStar = false;
-            this._isDead = false;
-            this._isGrounded = false;
-            this._isJumping = false;
+            this._gravity = 9.81;
+            this._maxSpeedX = 10;
             this._isRunning = false;
             this.isColliding = false;
             this.start();
         }
-        Player.prototype.start = function () {
+        Helicase.prototype.start = function () {
             this._velocity = new objects.Vector2(0, 0);
-            this.position = new objects.Vector2(200, 0);
+            this.position = new objects.Vector2(0, 0);
             this._accelerationX = 0;
         };
-        Player.prototype.update = function () {
+        Helicase.prototype.update = function () {
             // Acceleration \
             // Velocity
             if (this._velocity.x > this._maxSpeedX) {
@@ -39,17 +32,8 @@ var objects;
             else {
                 this._velocity.x += this._accelerationX;
             }
-            if (this._velocity.y > this._gravity) {
-                this._velocity.y = 2;
-            }
-            if (this.position.y < 150) {
-                this.position.y = 150;
-            }
-            if (this._isGrounded) {
-                this._velocity.y = 0;
-            }
-            else {
-                this._velocity.y += this._gravity;
+            if (this._velocity.y > 9.81) {
+                this._velocity.y = 5;
             }
             // Position
             this.position.x += this._velocity.x;
@@ -81,39 +65,24 @@ var objects;
 
             //
             */
-            console.log("Position" + this.position + " Vel: " + this._velocity + " Acc: " + this._accelerationX);
             _super.prototype.update.call(this);
         };
-        Player.prototype.getVelocity = function () {
+        Helicase.prototype.getVelocity = function () {
             return this._velocity;
         };
-        Player.prototype.setVelocity = function (newVelocity) {
+        Helicase.prototype.setVelocity = function (newVelocity) {
             this._velocity = newVelocity;
         };
-        Player.prototype.getIsGrounded = function () {
-            return this._isGrounded;
-        };
-        Player.prototype.setIsGrounded = function (b) {
-            this._isGrounded = b;
-        };
-        Player.prototype.moveRight = function () {
+        Helicase.prototype.moveRight = function () {
             this._accelerationX += 0.05;
         };
-        Player.prototype.moveLeft = function () {
-            this._accelerationX += -0.05;
-        };
-        Player.prototype.resetAcceleration = function () {
+        Helicase.prototype.resetAcceleration = function () {
             this._accelerationX = 0;
             this._velocity.x = 0;
-            this.gotoAndStop("player");
+            this.gotoAndStop("helicase");
         };
-        Player.prototype.jump = function () {
-            this.setIsGrounded(false);
-            this._velocity.y = -50;
-            this._isJumping = true;
-        };
-        return Player;
+        return Helicase;
     }(objects.GameObject));
-    objects.Player = Player;
+    objects.Helicase = Helicase;
 })(objects || (objects = {}));
-//# sourceMappingURL=player.js.map
+//# sourceMappingURL=helicase.js.map

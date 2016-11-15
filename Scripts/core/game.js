@@ -9,15 +9,16 @@ var currentScene;
 var scene;
 // Preload Assets required
 var assetData = [
-    { id: "bg", src: "../../Assets/images/allScene.png" },
-    { id: "floor", src: "../../Assets/images/floor.png" },
-    { id: "atlas", src: "../../Assets/images/Test.png" },
+    { id: "bg", src: "../../Assets/images/environment/bg.png" },
+    { id: "floor", src: "../../Assets/images/environment/ground.png" },
+    { id: "helicase", src: "../../Assets/images/environment/Helicase.png" },
+    { id: "atlas", src: "../../Assets/images/characters/atlas.png" },
     { id: "theme", src: "../../Assets/audio/main_theme.mp3" }
 ];
 function preload() {
     // Create a queue for assets being loaded
     assets = new createjs.LoadQueue(false);
-    assets.installPlugin(createjs.Sound);
+    //assets.installPlugin(createjs.Sound);
     // Register callback function to be run when assets complete loading.
     assets.on("complete", init, this);
     assets.loadManifest(assetData);
@@ -42,24 +43,30 @@ function init() {
             assets.getResult("atlas")
         ],
         "frames": [
-            [40, 0, 45, 45, 0, 0, 0],
-            [43, 45, 46, 86, 0, 0, 0],
-            [43.131, 39, 86, 0, 0, 0],
-            [0, 131, 43, 86, 0, 0, 0],
-            [0, 217, 87, 87, 0, 0, 0],
-            [0, 304, 87, 130, 0, 0, 0],
-            [0, 434, 93, 175, 0, 0, 0],
-            [0, 45, 43, 86, 0, 0, 0],
-            [0, 0, 40, 45, 0, 0, 0]
+            //
+            //Parameters:
+            //x, y, width, height, imgIndex, regX, regY
+            //
+            //atom
+            [10, 17, 210, 240, 0, 0, 0],
+            [242, 17, 210, 240, 0, 0, 0],
+            [474.17, 210, 240, 0, 0, 0],
+            [714, 17, 210, 240, 0, 0, 0],
+            //player
+            [13, 285, 120, 90, 0, 0, 0],
+            [131, 285, 120, 95, 0, 0, 0],
+            [249, 262, 120, 95, 0, 0, 0],
+            //npc
+            [27, 447, 580, 556, 0, 0, 0],
+            [600, 450, 580, 556, 0, 0, 0]
         ],
         "animations": {
-            "run": { "frames": [1, 3], speed: 0.5 },
-            "player": { "frames": [7] },
-            "block": { "frames": [0] },
-            "qBlock": { "frames": [8] },
-            "pipe1": { "frames": [4] },
-            "pipe2": { "frames": [5] },
-            "pipe3": { "frames": [6] }
+            "run": { "frames": [4, 5, 6], speed: 0.5 },
+            "player": { "frames": [4] },
+            "atom": { "frames": [0] },
+            "orbit": { "frames": [0, 1, 2, 3], speed: 0.5 },
+            "helicase": { "frames": [7] },
+            "ligase": { "frames": [8] }
         },
     };
     atlas = new createjs.SpriteSheet(atlasData);

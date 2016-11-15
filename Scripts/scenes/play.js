@@ -10,6 +10,7 @@ var scenes;
         function Play() {
             _super.call(this);
             this._scrollTrigger = 350;
+            this._jumpDelay = 50;
             this.start();
         }
         Play.prototype.start = function () {
@@ -17,6 +18,7 @@ var scenes;
             this._ground = new createjs.Bitmap(assets.getResult("floor"));
             this._scrollableObjContainer = new createjs.Container();
             this._player = new objects.Player("player");
+            this._helicase = new objects.Helicase("helicase");
             this._pipes = [];
             this._pipes.push(new objects.Pipe(config.PipeSize.SMALL, new objects.Vector2(1208, 450)));
             this._pipes.push(new objects.Pipe(config.PipeSize.MEDIUM, new objects.Vector2(1640, 408)));
@@ -34,19 +36,19 @@ var scenes;
             this._scrollableObjContainer.addChild(this._bg);
             this._scrollableObjContainer.addChild(this._player);
             this._scrollableObjContainer.addChild(this._ground);
-            for (var _i = 0, _a = this._pipes; _i < _a.length; _i++) {
-                var pipe = _a[_i];
-                this._scrollableObjContainer.addChild(pipe);
-            }
-            for (var _b = 0, _c = this._blocks; _b < _c.length; _b++) {
-                var block = _c[_b];
-                this._scrollableObjContainer.addChild(block);
-            }
-            for (var _d = 0, _e = this._qBlocks; _d < _e.length; _d++) {
-                var qBlock = _e[_d];
-                this._scrollableObjContainer.addChild(qBlock);
-            }
-            this._ground.y = 535;
+            this._scrollableObjContainer.addChild(this._helicase);
+            // for(let pipe of this._pipes) {
+            //     this._scrollableObjContainer.addChild(pipe);
+            // }
+            // for(let block of this._blocks) {
+            //     this._scrollableObjContainer.addChild(block);
+            // }
+            // for(let qBlock of this._qBlocks) {
+            //     this._scrollableObjContainer.addChild(qBlock);
+            // }
+            this._ground.y = 537;
+            this._helicase.y = 100;
+            this._helicase.x = -400;
             this.addChild(this._scrollableObjContainer);
             window.onkeydown = this._onKeyDown;
             window.onkeyup = this._onKeyUp;
@@ -59,6 +61,7 @@ var scenes;
             }
             if (controls.RIGHT) {
                 this._player.moveRight();
+                this._helicase.moveRight();
             }
             if (controls.JUMP) {
                 this._player.jump();

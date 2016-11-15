@@ -6,12 +6,14 @@ module scenes {
         private _ground : createjs.Bitmap;
         private _player : objects.Player;
 
+        private _helicase : objects.Helicase;
         private _pipes : objects.Pipe[];
         private _blocks : objects.Block[];
         private _qBlocks : objects.qBlock[];
         private _scrollableObjContainer : createjs.Container;
 
         private _scrollTrigger : number = 350;
+        private _jumpDelay : number = 50;
 
         constructor() {
             super();
@@ -23,6 +25,7 @@ module scenes {
             this._ground = new createjs.Bitmap(assets.getResult("floor"));
             this._scrollableObjContainer = new createjs.Container();
             this._player = new objects.Player("player");
+            this._helicase = new objects.Helicase("helicase");
 
             this._pipes = [];
             this._pipes.push(new objects.Pipe(config.PipeSize.SMALL, new objects.Vector2(1208, 450)));
@@ -44,19 +47,24 @@ module scenes {
             this._scrollableObjContainer.addChild(this._bg);
             this._scrollableObjContainer.addChild(this._player);
             this._scrollableObjContainer.addChild(this._ground);
-            for(let pipe of this._pipes) {
-                this._scrollableObjContainer.addChild(pipe);
-            }
+            this._scrollableObjContainer.addChild(this._helicase);
+            
+            // for(let pipe of this._pipes) {
+            //     this._scrollableObjContainer.addChild(pipe);
+            // }
 
-            for(let block of this._blocks) {
-                this._scrollableObjContainer.addChild(block);
-            }
+            // for(let block of this._blocks) {
+            //     this._scrollableObjContainer.addChild(block);
+            // }
 
-            for(let qBlock of this._qBlocks) {
-                this._scrollableObjContainer.addChild(qBlock);
-            }
+            // for(let qBlock of this._qBlocks) {
+            //     this._scrollableObjContainer.addChild(qBlock);
+            // }
 
-            this._ground.y = 535;
+            this._ground.y = 537;
+            
+            this._helicase.y = 100;
+            this._helicase.x = -400;
 
             this.addChild(this._scrollableObjContainer);
 
@@ -75,6 +83,7 @@ module scenes {
             }
             if(controls.RIGHT) { 
                 this._player.moveRight();
+                this._helicase.moveRight();
             } 
             if(controls.JUMP) {
                 this._player.jump();

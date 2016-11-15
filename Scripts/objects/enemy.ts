@@ -13,7 +13,7 @@ module objects {
         public center:objects.Vector2;
 
         constructor(imageString:string, life : number) {
-            super(enemyAtlas, imageString, "");
+            super(imageString, "orbit");
             this._life = life;
         }
 

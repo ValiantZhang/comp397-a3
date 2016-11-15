@@ -1,18 +1,11 @@
 module objects {
-    export class Player extends objects.GameObject {
-        private _gravity : number = 2;
+    export class Helicase extends objects.GameObject {
+        private _gravity : number = 9.81;
 
-        private _maxSpeedX : number = 3;
+        private _maxSpeedX : number = 10;
         private _velocity : objects.Vector2;
         private _accelerationX : number;
-        private _jumpSpeed : number = 2;
-        private _friction : number = -1;
 
-        private _marioState : number = config.MarioState.SMALL;
-        private _isStar : boolean = false;
-        private _isDead : boolean = false;
-        private _isGrounded : boolean = false;
-        private _isJumping : boolean = false;
         private _isRunning : boolean = false;
         
         public isColliding : boolean = false;
@@ -24,7 +17,7 @@ module objects {
 
         public start() : void {
             this._velocity = new objects.Vector2(0,0);
-            this.position = new objects.Vector2(200, 0);
+            this.position = new objects.Vector2(0, 0);
             this._accelerationX = 0;
         }
 
@@ -40,19 +33,8 @@ module objects {
                 this._velocity.x += this._accelerationX;
             }
 
-            if(this._velocity.y > this._gravity) {
-                this._velocity.y = 2;
-            }
-            
-            if (this.position.y < 150){
-                this.position.y = 150;
-            }
-
-
-            if(this._isGrounded) {
-                this._velocity.y = 0;
-            } else {
-                this._velocity.y += this._gravity;
+            if(this._velocity.y > 9.81) {
+                this._velocity.y = 5;
             }
 
 
@@ -88,7 +70,6 @@ module objects {
 
             //
             */
-            console.log("Position" + this.position + " Vel: " + this._velocity + " Acc: " + this._accelerationX);
             super.update();
         }
 
@@ -100,31 +81,14 @@ module objects {
             this._velocity = newVelocity;
         }
 
-        public getIsGrounded() : boolean {
-            return this._isGrounded;
-        }
-
-        public setIsGrounded(b : boolean) : void {
-            this._isGrounded = b;
-        }
-
         public moveRight() : void {
             this._accelerationX += 0.05;
         }
-        public moveLeft() : void {
-            this._accelerationX += -0.05;
-        }
+        
         public resetAcceleration() : void {
             this._accelerationX = 0;
             this._velocity.x = 0;
-            this.gotoAndStop("player");
-        }
-        public jump() : void {
-            this.setIsGrounded(false);
-            
-            this._velocity.y = -50;
-            
-            this._isJumping = true;
+            this.gotoAndStop("helicase");
         }
     }
 }

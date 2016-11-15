@@ -9,7 +9,7 @@ var objects;
         __extends(Ground, _super);
         function Ground() {
             _super.call(this, "ground");
-            this.defaultPosition = new objects.Vector2(0, 538);
+            this.defaultPosition = new objects.Vector2(0, 550);
             this.position = this.defaultPosition;
         }
         return Ground;

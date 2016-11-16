@@ -10,6 +10,8 @@
 /// <reference path="../objects/scene.ts" />
 /// <reference path="../objects/player.ts" />
 /// <reference path="../objects/helicase.ts" />
+/// <reference path="../objects/atom.ts" />
+
 /// <reference path="../objects/enemy.ts" />
 /// <reference path="../objects/gameobject.ts" />
 /// <reference path="../objects/vector2.ts" />

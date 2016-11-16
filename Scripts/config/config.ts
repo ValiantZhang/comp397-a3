@@ -18,15 +18,15 @@ module config {
         public static FPS : number = 60;
     }
 
-    export class PipeSize {
-        public static SMALL : string = "pipe1";
-        public static MEDIUM : string = "pipe2";
-        public static LARGE : string = "pipe3";
-    }
+    // export class PipeSize {
+    //     public static SMALL : string = "pipe1";
+    //     public static MEDIUM : string = "pipe2";
+    //     public static LARGE : string = "pipe3";
+    // }
 
-    export class MarioState {
-        public static SMALL : number = 0;
-        public static BIG : number = 1;
-        public static FLOWER : number = 2;
-    }
+    // export class MarioState {
+    //     public static SMALL : number = 0;
+    //     public static BIG : number = 1;
+    //     public static FLOWER : number = 2;
+    // }
 }

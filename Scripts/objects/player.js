@@ -13,7 +13,6 @@ var objects;
             this._maxSpeedX = 3;
             this._jumpSpeed = 2;
             this._friction = -1;
-            this._marioState = config.MarioState.SMALL;
             this._isStar = false;
             this._isDead = false;
             this._isGrounded = false;
@@ -109,7 +108,7 @@ var objects;
         };
         Player.prototype.jump = function () {
             this.setIsGrounded(false);
-            this._velocity.y = -50;
+            this._velocity.y = -25;
             this._isJumping = true;
         };
         return Player;

@@ -8,7 +8,6 @@ module objects {
         private _jumpSpeed : number = 2;
         private _friction : number = -1;
 
-        private _marioState : number = config.MarioState.SMALL;
         private _isStar : boolean = false;
         private _isDead : boolean = false;
         private _isGrounded : boolean = false;
@@ -122,7 +121,7 @@ module objects {
         public jump() : void {
             this.setIsGrounded(false);
             
-            this._velocity.y = -50;
+            this._velocity.y = -25;
             
             this._isJumping = true;
         }

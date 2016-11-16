@@ -45,6 +45,9 @@ var scenes;
             this._atoms.push(new objects.Atom(new objects.Vector2(1200, 150)));
             this._atoms.push(new objects.Atom(new objects.Vector2(1600, 400)));
             this._atoms.push(new objects.Atom(new objects.Vector2(1550, 10)));
+            this._atoms.push(new objects.Atom(new objects.Vector2(1950, 200)));
+            this._atoms.push(new objects.Atom(new objects.Vector2(2050, 10)));
+            this._atoms.push(new objects.Atom(new objects.Vector2(2200, 400)));
             this._atoms.push(new objects.Atom(new objects.Vector2(500, 200)));
             // for(let pipe of this._pipes) {
             //     this._scrollableObjContainer.addChild(pipe);
@@ -61,7 +64,7 @@ var scenes;
             }
             this._ground.y = 537;
             this._helicase.y = 100;
-            this._helicase.x = -400;
+            this._helicase.x = -500;
             this._ligase.x = 2700;
             this._ligase.y = 100;
             this.addChild(this._scrollableObjContainer);
@@ -74,6 +77,7 @@ var scenes;
             this._checkControls();
             this._checkAtomCol();
             this._checkHelicaseCol();
+            this._checkLigaseCol();
             if (!this._player.getIsGrounded())
                 this._checkPlayerWithFloor();
             this._player.update();
@@ -124,6 +128,17 @@ var scenes;
                 this._player.isColliding = false;
             }
             this._helicase.x += 1;
+        };
+        Play.prototype._checkLigaseCol = function () {
+            if (this.checkCollision(this._player, this._ligase)) {
+                this._player.position.x = this._ligase.x - this._player.getBounds().width - 0.01;
+                this._player.setVelocity(new objects.Vector2(0, 0));
+                this._player.resetAcceleration();
+                this._player.isColliding = true;
+            }
+            else {
+                this._player.isColliding = false;
+            }
         };
         Play.prototype._onKeyDown = function (event) {
             switch (event.keyCode) {
@@ -187,10 +202,10 @@ var scenes;
             }
         };
         Play.prototype.checkCollision = function (obj1, obj2) {
-            if (obj2.x < obj1.x + obj1.getBounds().width &&
-                obj2.x + obj2.getBounds().width > obj1.x &&
-                obj2.y < obj1.y + obj1.getBounds().height &&
-                obj2.y + obj2.getBounds().height > obj1.y - 10) {
+            if (obj2.x < obj1.x + obj1.getBounds().width - 20 &&
+                obj2.x + obj2.getBounds().width > obj1.x + 20 &&
+                obj2.y < obj1.y + obj1.getBounds().height - 20 &&
+                obj2.y + obj2.getBounds().height > obj1.y + 20) {
                 return true;
             }
             return false;

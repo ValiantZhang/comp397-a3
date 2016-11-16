@@ -14,9 +14,12 @@ var scene: number;
 // Preload Assets required
 var assetData:objects.Asset[] = [
     {id: "bg", src: "../../Assets/images/environment/bg.png"},
+    {id: "tutBG", src: "../../Assets/images/environment/tutBG.png"},
     {id: "floor", src: "../../Assets/images/environment/ground.png"},
     {id: "helicase", src: "../../Assets/images/environment/Helicase.png"},
     {id: "atlas", src: "../../Assets/images/characters/atlas.png"},
+    {id: "playBTN", src: "../../Assets/images/buttons/PlayBTN.png"},
+    {id: "tutBTN", src: "../../Assets/images/buttons/TutBTN.png"},
     {id: "theme", src: "../../Assets/audio/main_theme.mp3"}
 ];
 
@@ -65,13 +68,13 @@ function init() {
             [249,262,120,95,0,0,0],
             //npc
             [27,447,565,556,0,0,0],
-            [600,450,565,556,0,0,0]
+            [640,450,565,556,0,0,0]
         ],
         "animations":{
             "run" : { "frames" : [4, 5, 6] , speed : 0.2},
             "player" : { "frames" : [4] },
             "atom" : { "frames" : [0] },
-            "orbit" : { "frames" : [0, 1, 2, 3, 2, 1, 2, 0] , speed : 0.5}, 
+            "orbit" : { "frames" : [0, 1, 1, 3, 3, 1, 1, 0] , speed : 0.2}, 
             "helicase" : { "frames" : [7] },
             "ligase" : { "frames" : [8] }
         }, 
@@ -79,7 +82,7 @@ function init() {
 
     atlas = new createjs.SpriteSheet(atlasData);
 
-    scene = config.Scene.GAME;
+    scene = config.Scene.MENU;
     changeScene();
 }
 
@@ -104,6 +107,11 @@ function changeScene() : void {
             currentScene = new scenes.Play();
             console.log("Starting PLAY scene");
             break;
+        case config.Scene.TUTORIAL :
+        stage.removeAllChildren();
+        currentScene = new scenes.Tutorial();
+        console.log("Starting TUTORIAL scene");
+        break;
     }
     
 }

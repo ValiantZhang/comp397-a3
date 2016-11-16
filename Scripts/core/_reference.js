@@ -15,5 +15,6 @@
 /// <reference path="../objects/pipe.ts" />
 /// <reference path="../util/physicsManager.ts" />
 /// <reference path="../scenes/menu.ts" />
-/// <reference path="../scenes/play.ts" /> 
+/// <reference path="../scenes/play.ts" />
+/// <reference path="../scenes/tutorial.ts" /> 
 //# sourceMappingURL=_reference.js.map

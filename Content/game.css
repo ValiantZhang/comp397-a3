@@ -11,7 +11,9 @@ canvas {
     border: 1px solid black;
     border-radius: 10px;
     text-align: center;
-    background-color: #5D94FB;
-    margin-left: 10%;
-    /*HINT: Hide the cursor here */
+    background-color: silver;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 10%;
 }

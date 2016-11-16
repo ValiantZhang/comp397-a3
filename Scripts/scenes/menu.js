@@ -18,12 +18,25 @@ var scenes;
         Menu.prototype.start = function () {
             // Add menu scene to global stage container
             stage.addChild(this);
+            this._menuLabel = new objects.Label("Learn. You!", "70px Georgia", "#FFFFFF", config.Screen.CENTER_X, config.Screen.CENTER_Y - 20);
+            this.addChild(this._menuLabel);
+            this._playButton = new objects.Button("playBTN", config.Screen.CENTER_X - 190, config.Screen.CENTER_Y - 325);
+            this.addChild(this._playButton);
+            this._playButton.on("click", this._playButtonClick, this);
+            this._tutButton = new objects.Button("tutBTN", config.Screen.CENTER_X - 190, config.Screen.CENTER_Y + 25);
+            this.addChild(this._tutButton);
+            this._tutButton.on("click", this._tutButtonClick, this);
         };
         Menu.prototype.update = function () {
         };
-        Menu.prototype._playBtnClick = function (event) {
-            console.log("PRINT");
+        Menu.prototype._playButtonClick = function (event) {
+            // Change global scene variable to GAME. Call global changeScene() function
             scene = config.Scene.GAME;
+            changeScene();
+        };
+        Menu.prototype._tutButtonClick = function (event) {
+            // Change global scene variable to GAME. Call global changeScene() function
+            scene = config.Scene.TUTORIAL;
             changeScene();
         };
         return Menu;

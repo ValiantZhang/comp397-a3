@@ -4,14 +4,15 @@
 */
 
 module scenes {
-    export class Menu extends objects.Scene {
+    export class Tutorial extends objects.Scene {
 
         // Private instance variables
         // Label or bitmap
         // Button 
         private _playButton : objects.Button;
         private _tutButton : objects.Button;
-        private _menuLabel : objects.Label;
+        
+        private _bg: createjs.Bitmap;
         
         // Menu Class Contructor
         constructor() {
@@ -22,16 +23,13 @@ module scenes {
             // Add menu scene to global stage container
             stage.addChild(this);
             
-            this._menuLabel = new objects.Label("Learn. You!", "70px Georgia", "#FFFFFF", config.Screen.CENTER_X, config.Screen.CENTER_Y - 20);
-            this.addChild(this._menuLabel);
+            this._bg = new createjs.Bitmap(assets.getResult("tutBG"));
+            this.addChild(this._bg);
             
-            this._playButton = new objects.Button("playBTN", config.Screen.CENTER_X - 190, config.Screen.CENTER_Y - 325);
+            this._playButton = new objects.Button("playBTN", config.Screen.CENTER_X + 50, config.Screen.CENTER_Y - 70);
             this.addChild(this._playButton);
             this._playButton.on("click", this._playButtonClick, this);
             
-            this._tutButton = new objects.Button("tutBTN", config.Screen.CENTER_X - 190, config.Screen.CENTER_Y + 25);
-            this.addChild(this._tutButton);
-            this._tutButton.on("click", this._tutButtonClick, this);
         }
 
         public update() : void {
@@ -41,12 +39,6 @@ module scenes {
         private _playButtonClick(event : createjs.MouseEvent) {
             // Change global scene variable to GAME. Call global changeScene() function
             scene = config.Scene.GAME;
-            changeScene();
-        }
-        
-        private _tutButtonClick(event : createjs.MouseEvent) {
-            // Change global scene variable to GAME. Call global changeScene() function
-            scene = config.Scene.TUTORIAL;
             changeScene();
         }
     }

@@ -13,6 +13,7 @@ module scenes {
         private _tutButton : objects.Button;
         
         private _bg: createjs.Bitmap;
+        private _highScoreLabel : objects.Label;
         
         // Menu Class Contructor
         constructor() {
@@ -26,7 +27,14 @@ module scenes {
             this._bg = new createjs.Bitmap(assets.getResult("tutBG"));
             this.addChild(this._bg);
             
-            this._playButton = new objects.Button("playBTN", config.Screen.CENTER_X + 50, config.Screen.CENTER_Y - 70);
+            if (highScore == null){
+                highScore = 0;
+            }
+            
+            this._highScoreLabel = new objects.Label("Fastest Learning: " + highScore, "30px Georgia", "#FFFF00", config.Screen.CENTER_X + 200, config.Screen.CENTER_Y - 250);
+            this.addChild(this._highScoreLabel);
+            
+            this._playButton = new objects.Button("playBTN", config.Screen.CENTER_X + 50, config.Screen.CENTER_Y - 40);
             this.addChild(this._playButton);
             this._playButton.on("click", this._playButtonClick, this);
             

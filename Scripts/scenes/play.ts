@@ -7,6 +7,8 @@ module scenes {
 
         private _ground : createjs.Bitmap;
         private _player : objects.Player;
+        private _scoreLabel : objects.Label;
+        private _learningLabel : objects.Label;
 
         private _helicase : objects.Helicase;
         private _ligase : objects.Helicase;
@@ -19,6 +21,9 @@ module scenes {
 
         private _scrollTrigger : number = 350;
         private _jumpDelay : number = 50;
+        private _score : number;
+        private _isPlayerDead : boolean;
+        private _isPlayerWin : boolean;
 
         constructor() {
             super();
@@ -26,12 +31,26 @@ module scenes {
         }
 
         public start() : void {
+            this._resetControls();
+            score = 2600;
+            this._score = score;
             this._bg = new createjs.Bitmap(assets.getResult("bg"));
             this._ground = new createjs.Bitmap(assets.getResult("floor"));
             this._scrollableObjContainer = new createjs.Container();
             this._player = new objects.Player("player");
             this._helicase = new objects.Helicase("helicase");
             this._ligase = new objects.Helicase("ligase");
+            
+            this._scoreLabel = new objects.Label("Learn Faster! ",
+                "30px Georgia", "#FFFF00", config.Screen.CENTER_X - 420, config.Screen.CENTER_Y - 250);
+            this._scoreLabel.lineWidth = 200;
+            this._scoreLabel.lineHeight = 30;
+            this.addChild(this._scoreLabel);
+            
+            this._learningLabel = new objects.Label("Helicase splits DNA into two strands, this is a laggin strand.", "20px Georgia", "#FFFFFF", config.Screen.CENTER_X, config.Screen.CENTER_Y - 250);
+            this._learningLabel.lineWidth = 200;
+            this._learningLabel.lineHeight = 30;
+            this.addChild(this._learningLabel);
 
             // this._pipes = [];
             // this._pipes.push(new objects.Pipe(config.PipeSize.SMALL, new objects.Vector2(1208, 450)));
@@ -59,10 +78,11 @@ module scenes {
             this._atoms = [];
             this._atoms.push(new objects.Atom(new objects.Vector2(840,400)));
             this._atoms.push(new objects.Atom(new objects.Vector2(910,300)));
-            this._atoms.push(new objects.Atom(new objects.Vector2(1200,150)));
+            this._atoms.push(new objects.Atom(new objects.Vector2(1200,200)));
             this._atoms.push(new objects.Atom(new objects.Vector2(1600,400)));
             this._atoms.push(new objects.Atom(new objects.Vector2(1550,10)));
-            this._atoms.push(new objects.Atom(new objects.Vector2(1950,200)));
+            this._atoms.push(new objects.Atom(new objects.Vector2(1850,200)));
+            this._atoms.push(new objects.Atom(new objects.Vector2(2000,170)));
             this._atoms.push(new objects.Atom(new objects.Vector2(2050,10)));
             this._atoms.push(new objects.Atom(new objects.Vector2(2200,400)));
             this._atoms.push(new objects.Atom(new objects.Vector2(500,200)));
@@ -82,6 +102,9 @@ module scenes {
             for(let atom of this._atoms) {
                 this._scrollableObjContainer.addChild(atom);
             }
+            
+            this._scrollableObjContainer.addChild(this._scoreLabel);
+            this._scrollableObjContainer.addChild(this._learningLabel);
 
             this._ground.y = 537;
             
@@ -107,6 +130,9 @@ module scenes {
         this._checkAtomCol();
         this._checkHelicaseCol();
         this._checkLigaseCol();
+        this._updateScore();
+        this._checkEducation();
+        this._checkPlayerStatus();
 
             if(!this._player.getIsGrounded())
                 this._checkPlayerWithFloor();
@@ -150,11 +176,29 @@ module scenes {
                     this._player.resetAcceleration();
 
                     this._player.isColliding = true;
-                    console.log(a.name);
+                    this._isPlayerDead = true;
                 }
                 else {
                     this._player.isColliding = false;
                 }
+            }
+        }
+        
+        private _checkPlayerStatus(){
+            if (this._isPlayerDead){
+                scene = config.Scene.MENU;
+                changeScene();
+                alert("Oh no! Mutation! When high energy radiation particles smash into DNA, it'll cause some damage. Looks like you're dead!");
+            }
+            
+            if (this._isPlayerWin){
+                if (score > highScore){
+                    highScore = score;
+                }
+            
+                scene = config.Scene.MENU;
+                changeScene();
+                alert("You completed the sequence! The organism lives, good job!");
             }
         }
         
@@ -181,12 +225,20 @@ module scenes {
                     this._player.resetAcceleration();
 
                     this._player.isColliding = true;
-                    
+                    this._isPlayerWin = true;
                 }
                 else {
                     this._player.isColliding = false;
                 }
                 
+        }
+        
+        private _resetControls(){
+            controls.UP = false;
+            controls.DOWN = false;
+            controls.LEFT = false;
+            controls.RIGHT = false;
+            controls.JUMP = false;
         }
 
         private _onKeyDown(event: KeyboardEvent) : void {
@@ -254,13 +306,65 @@ module scenes {
                 return false;
             }
         }
+        
+        private _checkEducation(){
+            if (this._player.x > 300){
+                this._learningLabel.x = 500;
+                this._learningLabel.text = "Each Strand is made up of 4 chemical bases";
+            }
+            
+            if (this._player.x > 450){
+                this._learningLabel.x = 600;
+                this._learningLabel.text = "Represented by letters A, C, G, and T";
+            }
+            
+            if (this._player.x > 600){
+                this._learningLabel.x = 800;
+                this._learningLabel.text = "Where there is a T, there will be an A";
+            }
+            
+            if (this._player.x > 800){
+                this._learningLabel.x = 1000;
+                this._learningLabel.text = "Where there is a G, there will be a C";
+            }
+            
+            if (this._player.x > 1000){
+                this._learningLabel.x = 1200;
+                this._learningLabel.text = "DNA Polymerase adds DNA bases to the strand";
+            }
+            
+            if (this._player.x > 1200){
+                this._learningLabel.x = 1500;
+                this._learningLabel.text = "Looks like you're DNA Polymerase";
+            }
+            
+            if (this._player.x > 1400){
+                this._learningLabel.x = 2000;
+                this._learningLabel.text = "This process repeats until the strand is complete";
+            }
+            
+            if (this._player.x > 1900){
+                this._learningLabel.x = 2500;
+                this._learningLabel.lineWidth = 400;
+                this._learningLabel.text = "DNA Ligase seals up the fragments of DNA to form a continuous double strand";
+            }
+        }
+        
+        private _updateScore(){
+            this._score = score;
+            score -= 1;
+            
+            this._scoreLabel.x += 1;
+            this._scoreLabel.text = "Learn Faster! " + this._score;
+            
+        }
 
         private checkCollision(obj1 : objects.GameObject, obj2 : objects.GameObject) : boolean {
 
-            if(obj2.x < obj1.x + obj1.getBounds().width - 20 &&
-                obj2.x + obj2.getBounds().width > obj1.x + 20 &&
-                obj2.y < obj1.y + obj1.getBounds().height - 20 &&
-                obj2.y + obj2.getBounds().height > obj1.y + 20) {
+            if(obj2.x < obj1.x + obj1.getBounds().width - 22 &&
+                obj2.x + obj2.getBounds().width > obj1.x + 22 &&
+                obj2.y < obj1.y + obj1.getBounds().height - 22 &&
+                obj2.y + obj2.getBounds().height > obj1.y + 22) {
                 return true;
             }
 

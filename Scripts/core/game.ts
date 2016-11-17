@@ -10,6 +10,8 @@ var atlas : createjs.SpriteSheet;
 
 var currentScene : objects.Scene;
 var scene: number;
+var highScore : number;
+var score : number;
 
 // Preload Assets required
 var assetData:objects.Asset[] = [
@@ -39,6 +41,7 @@ function init() {
     stage.enableMouseOver(20);
     createjs.Ticker.setFPS(config.Game.FPS);
     createjs.Ticker.on("tick", this.gameLoop, this);
+    highScore = 0;
 
     let atlasData = {
         "images": [

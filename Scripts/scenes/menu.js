@@ -18,7 +18,7 @@ var scenes;
         Menu.prototype.start = function () {
             // Add menu scene to global stage container
             stage.addChild(this);
-            this._menuLabel = new objects.Label("Learn. You!", "70px Georgia", "#FFFFFF", config.Screen.CENTER_X, config.Screen.CENTER_Y - 20);
+            this._menuLabel = new objects.Label("Lear-N.A.", "70px Georgia", "#FFFFFF", config.Screen.CENTER_X, config.Screen.CENTER_Y - 20);
             this.addChild(this._menuLabel);
             this._playButton = new objects.Button("playBTN", config.Screen.CENTER_X - 190, config.Screen.CENTER_Y - 325);
             this.addChild(this._playButton);

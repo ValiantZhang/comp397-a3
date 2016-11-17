@@ -7,6 +7,8 @@ var spriteSheetLoader;
 var atlas;
 var currentScene;
 var scene;
+var highScore;
+var score;
 // Preload Assets required
 var assetData = [
     { id: "bg", src: "../../Assets/images/environment/bg.png" },
@@ -33,6 +35,7 @@ function init() {
     stage.enableMouseOver(20);
     createjs.Ticker.setFPS(config.Game.FPS);
     createjs.Ticker.on("tick", this.gameLoop, this);
+    highScore = 0;
     var atlasData = {
         "images": [
             /*
